@@ -19,7 +19,7 @@ function NewKegForm(props) {
   );
 }
 
-NewTicketForm.propTypes = {
+NewKegForm.propTypes = {
   onNewKegCreation: PropTypes.func
 };
 
