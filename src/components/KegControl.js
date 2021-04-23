@@ -1,16 +1,23 @@
 import React from 'react';
+import KegList from './KegList';
 
-class TicketControl extends React.Component {
+class KegControl extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      masterKegList: []
+    };
   }
 
   render(){
+    let currentlyVisibleState = null;
+    if (this.state.formVisibleOnPage) {
+      currentlyVisibleState = <KegList />
+    }
     return (
       <React.Fragment>
-
+        {currentlyVisibleState}
       </React.Fragment>
     );
   }
