@@ -46,12 +46,20 @@ class KegControl extends React.Component {
     });
   }
 
+  handleMinusPint = (id) => {
+    id.preventDefault()
+    this.setState(prev => ({
+      ...prev,
+      [id.target.pintsLeft]: prev[id.target.pintsLeft] ? prev[id.target.pintsLeft] - 1 : 0
+    }));
+  }
+
   render(){
     let currentlyVisibleState = null;
     let buttonText = null;
 
     if (this.state.selectedKeg != null) {
-      currentlyVisibleState = <KegDetail keg = {this.state.selectedKeg} onClickingDelete = {this.handleDeletingKeg} />
+      currentlyVisibleState = <KegDetail keg = {this.state.selectedKeg} onClickingDelete = {this.handleDeletingKeg} onPouringPint = {this.handleMinusPint} />
       buttonText = "Return to Keg List"
     }
     else if (this.state.formVisibleOnPage) {

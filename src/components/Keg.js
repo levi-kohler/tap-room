@@ -8,6 +8,7 @@ function Keg(props){
         <h3>{props.name} - {props.brand}</h3>
         <p>${props.price} per pint</p>
         <p><i>{props.alcoholContent}%</i></p>
+        <p>Pints left in keg: 124</p>
         <hr/>
       </div>
     </React.Fragment>
