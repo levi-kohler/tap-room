@@ -10,10 +10,12 @@ function KegList(props) {
       {props.kegList.map((keg) => 
       <Keg
         whenKegClicked = { props.onKegSelection }
+        whenPourClicked = { props.onPintPour }
         name={keg.name}
         brand={keg.brand}
         price={keg.price}
         alcoholContent={keg.alcoholContent}
+        pintsLeft ={keg.pintsLeft}
         id={keg.id}
         key={keg.id}/>
       )}
@@ -23,7 +25,8 @@ function KegList(props) {
 
 KegList.propTypes = {
   kegList: PropTypes.array,
-  onKegSelection: PropTypes.func
+  onKegSelection: PropTypes.func,
+  onPintPour: PropTypes.func
 };
 
 export default KegList;
