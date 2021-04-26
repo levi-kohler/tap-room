@@ -9,6 +9,7 @@ function Keg(props){
         <p>${props.price} per pint</p>
         <p><i>{props.alcoholContent}%</i></p>
         <p>Pints left in keg: {props.pintsLeft}</p>
+        <button onClick = {() => props.whenPourClicked(props.id)}>Pour a pint</button>
         <hr/>
       </div>
     </React.Fragment>
