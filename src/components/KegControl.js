@@ -2,6 +2,7 @@ import React from 'react';
 import KegList from './KegList';
 import NewKegForm from './NewKegForm';
 import KegDetail from './KegDetail';
+import { v4 } from 'uuid'
 
 class KegControl extends React.Component {
 
@@ -47,11 +48,19 @@ class KegControl extends React.Component {
   }
 
   handleMinusPint = (id) => {
-    id.preventDefault()
-    this.setState(prev => ({
-      ...prev,
-      [id.target.pintsLeft]: prev[id.target.pintsLeft] ? prev[id.target.pintsLeft] - 1 : 0
-    }));
+    const selectedKeg = this.state.masterKegList.filter(keg => keg.id === id)[0];
+    const newMasterKegList = this.state.masterKegList.filter(keg => keg.id !== id);
+    if (selectedKeg.pintsLeft > 0) {
+      this.setState({
+        masterKegList: newMasterKegList.concat({
+          name: selectedKeg.name, 
+          brand: selectedKeg.brand, 
+          price: selectedKeg.price, 
+          alcoholContent: selectedKeg.alcoholContent, 
+          pintsLeft: (selectedKeg.pintsLeft - 1),
+          id: v4()}).sort((a, b) => (a.name > b.name ? 1 : -1))
+      })
+    } 
   }
 
   render(){
@@ -59,14 +68,16 @@ class KegControl extends React.Component {
     let buttonText = null;
 
     if (this.state.selectedKeg != null) {
-      currentlyVisibleState = <KegDetail keg = {this.state.selectedKeg} onClickingDelete = {this.handleDeletingKeg} onPouringPint = {this.handleMinusPint} />
+      currentlyVisibleState = <KegDetail keg = {this.state.selectedKeg} onClickingDelete = {this.handleDeletingKeg} />
       buttonText = "Return to Keg List"
     }
     else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewKegForm onNewKegCreation={this.handleAddingNewKegToList} />;
       buttonText = "Return to Keg List";
     } else {
-      currentlyVisibleState = <KegList kegList={this.state.masterKegList} onKegSelection={this.handleChangingSelectedKeg} />;
+      currentlyVisibleState = <KegList kegList={this.state.masterKegList} 
+      onPintPour = {this.handleMinusPint}
+      onKegSelection={this.handleChangingSelectedKeg} />;
       buttonText = "Add Keg";
     }
 
